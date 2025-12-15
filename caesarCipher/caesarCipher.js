@@ -8,20 +8,26 @@ export function caesarCipher(word, factor) {
   const array = word.split('');
 
   for (let char of array) {
-    //Check if char is not a letter
-    if (alpha.indexOf(char.toLowerCase()) === -1) {
-      output += char;
-      continue;
-    }
+    output += encrypt(char);
   }
+
+  return output;
 
   function isLowerCase(char) {
     return char === char.toLowerCase() && char !== char.toUpperCase();
   }
 
-  function isUpperCase(char) {
-    return char === char.toUpperCase() && char !== char.toLowerCase();
-  }
+  function encrypt(char) {
+    //Check if char is not a letter
+    if (alpha.indexOf(char.toLowerCase()) === -1) {
+      return char;
+    }
 
-  return output;
+    let encrIdx = alpha.indexOf(char.toLowerCase()) + factor;
+
+    //Check if encrypted index wraps alphabet
+    if (encrIdx >= alpha.length) encrIdx = encrIdx - alpha.length;
+
+    return isLowerCase(char) ? alpha[encrIdx] : alpha[encrIdx].toUpperCase();
+  }
 }
